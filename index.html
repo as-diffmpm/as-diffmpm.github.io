@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>CollidingGS</title>
+
+    <meta name="description" content="PhysDreamer">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:image" content="">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1711">
+    <meta property="og:image:height" content="576">
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="" />
+    <meta property="og:title"
+        content="CollidingGS: Gaussian-Augmented Physics Simulation and Identification with Complex Colliders" />
+    <meta property="og:description"
+        content="CollidingGS: Gaussian-Augmented Physics Simulation and Identification with Complex Colliders. Abstract: System identification involving the geometry, appearance, and physical properties from video observations is a challenging task with applications in robotics and graphics. Recent approaches have relied on fully differentiable Material-Point-Method (MPM) and rendering for simultaneous optimizations of these properties. However, they are limited to simplified object-environment interactions with simple planar colliders and fail in more realistic scenarios where objects collide with non-planar surfaces. Available MPM-based simulators that support such complex interactions lack differentiability for gradient-based optimizations. We propose AS-DiffMPM, a differentiable MPM framework that enables physical property estimation with arbitrarily shaped colliders. Our approach extends existing methods by incorporating a differentiable collision handling mechanism, allowing the target object to interact with complex objects while maintaining end-to-end optimization. We show AS-DiffMPM can be easily interfaced with various novel view synthesis methods as a framework for differentiable system identifications." />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title"
+        content="CollidingGS: Gaussian-Augmented Physics Simulation and Identification with Complex Colliders" />
+    <meta name="twitter:description" content="Abs2" />
+    <meta name="twitter:image" content="" />
+
+
+    <link rel="icon" href="assets/figures/icon.png">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.3/clipboard.min.js"></script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+        </script>
+    <script defer src="js/fontawesome.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+    <script src="js/app.js"></script>
+    <!-- <script src="js/synced_video_selector.js"></script> -->
+
+</head>
+
+<body style="padding: 1%; width: 100%">
+    <div class="container-lg text-center" style="max-width: 1500px; margin: auto;" id="main">
+        <!-- <div class="container" id="main"> -->
+        <div class="row">
+            <h2 class="col-md-12 text-center">
+                <b>CollidingGS</b>: Gaussian-Augmented Physics Simulation and Identification with Complex Colliders
+            </h2>
+        </div>
+
+        <div class="row text-center">
+            <!--
+            <h4 class="col-md-12 text-center">
+                <i>European Conference on Computer Vision (ECCV) 2024, <b>Oral Presentation</b> </i>
+            </h4>
+            -->
+            <br>
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-6 text-center">
+                <ul class="list-inline">
+                    <li>
+                        <a href="https://federicovasile1.github.io/website/">
+                            Federico Vasile
+                        </a><sup>1,2</sup>
+                    </li>
+                    <li>
+                        <a href="https://rogerqi.github.io/">
+                            Ri-Zhao Qiu
+                        </a><sup>3</sup>
+                    </li>
+                    <li>
+                        <a href="https://hsp.iit.it/people-details/-/people/lorenzo-natale">
+                            Lorenzo Natale
+                        </a><sup>1</sup>
+                    </li>
+                    <li>
+                        <a href="https://xiaolonw.github.io/">
+                            Xiaolong Wang
+                        </a><sup>3</sup>
+                    </li>
+                    <wbr>
+                    <!-- </br>Google -->
+                </ul>
+            </div>
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-12 text-center">
+                <sup>1</sup>Istituto Italiano di Tecnologia, &nbsp <sup>2</sup>University of Genova, &nbsp
+                <sup>3</sup>UC San Diego
+            </div>
+            <!-- <div class="col-md-12 text-center">
+                * equal contribution
+            </div> -->
+        </div>
+
+        <div class="column has-text-centered">
+            <div class="publication-links">
+                <span class="link-block">
+                    <a href="" class="external-link button is-normal is-rounded is-dark">
+                        <span class="icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </span>
+                        <span>arXiv</span>
+                    </a>
+                </span>
+                <span class="link-block">
+                    <a href="" class="external-link button is-normal is-rounded is-dark">
+                        <span class="icon">
+                            <i class="fab fa-github"></i>
+                        </span>
+                        <span>Code</span>
+                    </a>
+                </span>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <!--
+                <h3> Insert description here</h3>
+                -->
+                <br><br>
+                <video id="co3d-grid" width="100%" autoplay loop muted controls>
+                    <source src="assets/videos/teaser_videos/teaser_video_morph.mp4" type="video/mp4" />
+                </video>
+                <br>
+                <!--
+                <p class="text-justify" style="text-align: center;">CollidingGS enables collisions with arbitrarily shaped objects.</p>
+                -->
+                <h3> TL;DR: CollidingGS enables collisions with arbitrarily shaped objects.</h3>
+            </div>
+        </div>
+        <br>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3>
+                    Abstract
+                </h3>
+                <p class="text-justify">
+                    System identification involving the geometry, appearance, and physical properties from video
+                    observations is a challenging task with applications in robotics and graphics. Recent approaches
+                    have relied on fully differentiable Material-Point-Method (MPM) and rendering for simultaneous
+                    optimizations of these properties. However, they are limited to simplified object-environment
+                    interactions with simple planar colliders and fail in more realistic scenarios where objects collide
+                    with non-planar surfaces. Available MPM-based simulators that support such complex interactions lack
+                    differentiability for gradient-based optimizations. We propose AS-DiffMPM, a differentiable MPM
+                    framework that enables physical property estimation with arbitrarily shaped colliders. Our approach
+                    extends existing methods by incorporating a differentiable collision handling mechanism, allowing
+                    the target object to interact with complex objects while maintaining end-to-end optimization. We
+                    show AS-DiffMPM can be easily interfaced with various novel view synthesis methods as a framework
+                    for differentiable system identifications.
+                </p>
+            </div>
+        </div>
+        <br>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3>
+                    <b>
+                        <font color="#7ec4a1">Colliding</font>
+                        <font color="#6e6e6e">GS</font>
+                    </b> = <font color="#7ec4a1">Collisions-enabled MPM</font> + <font color="#6e6e6e">2DGS-based collider</font>
+                </h3>
+                <br>
+                <image src="assets/figures/figure_teaser.png" width=100% style="display: block; margin: auto;"></image>
+                <br>
+                <p class="text-justify">
+                    Given multi-view input images, we first segment the continuum object and rigid body collider. The
+                    geometry of the continuum object is reconstructed using a rendering model (e.g., <a href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/"> Gaussian
+                    Splatting</a>), while the rigid body collider is separately reconstructed with <a href="https://surfsplatting.github.io/">2DGS</a>. Collision
+                    properties from the rigid body are projected onto the Collision Grid, then transferred to the
+                    continuum material particles. Particle trajectories are subsequently advected and collisions are
+                    handled during the P2G and G2P stages. Finally, the updated particle positions are mapped back to
+                    rendering primitives for photorealistic and physically plausible animation.
+                </p>
+            </div>
+        </div>
+        
+        <br><br>
+
+        <div class="row"></div>
+            <div class="col-md-8 col-md-offset-2">
+                <h3>
+                    System Identification Results
+                </h3><br>
+                <p class="text-justify">
+                    System identification involves estimating the physical parameters of objects from visual observations.
+                    Unlike previous methods, we address this challenge during collisions with complex colliders rather than planar surfaces.
+                    Our AS-DiffMPM can be seamlessly integrated with various rendering methods for the task at hand.
+                                                                                
+                    <br>Below, we present a visual comparison between the ground truth observations and the estimated physical parameters (upon convergence)
+                    using our AS-DiffMPM in combination with various rendering methods: <a href="https://surfsplatting.github.io/">2DGS</a>,
+                    <a href="https://sunset1995.github.io/dvgo/">DVGO</a>,      
+                    <a href="https://jukgei.github.io/project/gic/">MDyn-3DGS</a>.
+                </p> 
+
+                <div class="text-center">
+                    <div class="video-container">
+                        <video class="video" style="height: 512px; max-width: 100%;" m id="compVideo0" loop playsinline
+                            autoplay muted>
+                            <source src="assets/videos/red_rose/view4_force_0.mp4" />
+                        </video>
+                        </video>
+                        <video class="video" style="height: 512px; max-width: 100%;" id="compVideo1" loop playsinline
+                            autoplay muted hidden>
+                            <source src="assets/videos/red_rose/view4_force_1.mp4" />
+                        </video>
+                    </div>
+
+                    <script> // prevent flickering when switching videos
+                        video0 = document.getElementById("compVideo0");
+                        video1 = document.getElementById("compVideo1");
+                        video0.addEventListener('loadedmetadata', function () {
+                            if (activeVidID == 0 && select) {
+                                video0.play();
+                                video0.hidden = false;
+                                video1.hidden = true;
+                            }
+                        });
+                        video1.addEventListener('loadedmetadata', function () {
+                            if (activeVidID == 1 && select) {
+                                video1.play();
+                                video0.hidden = true;
+                                video1.hidden = false;
+                            }
+                        });
+                    </script>
+                </div>
+
+                <em>Select different materials, colliders and samples.</em>
+                <br><br>
+
+                <div class="text-center">
+                    <ul class="nav nav-pills center-pills">
+                        <li class="scene-pill active" data-value="red_rose"
+                            onclick="selectGalleryVideo(activeMethodPill, this, activeModePill)">
+                            <a>Newtonian</a>
+                        </li>
+                        <li class="scene-pill" data-value="telephone"
+                            onclick="selectGalleryVideo(activeMethodPill, this, activeModePill)">
+                            <a>Non-Newtonian</a>
+                        </li>
+                        <li class="scene-pill" data-value="hat"
+                            onclick="selectGalleryVideo(activeMethodPill, this, activeModePill)">
+                            <a>Granular</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <br>
+
+                <div class="text-center ">
+                    <!-- <em>Select viewpoint.</em> -->
+                    <ul class="nav nav-pills center-pills">
+                        <li class="mode-pill active" data-value="view4" onclick="selectGalleryVideo(activeMethodPill, activeScenePill, this)">
+                            <a>Box</a>
+                        </li>
+                        <li class="mode-pill" data-value="viewm" onclick="selectGalleryVideo(activeMethodPill, activeScenePill, this)">
+                            <a>Bunny</a>
+                        </li>
+                        <li class="mode-pill" data-value="viewm" onclick="selectGalleryVideo(activeMethodPill, activeScenePill, this)">
+                            <a>Armadillo</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <br>
+
+                <div class="text-center ">
+                    <!-- <em>Select interaction.</em> -->
+                    <ul class="nav nav-pills center-pills">
+                        <li class="method-pill active" data-value="force_0" onclick="selectGalleryVideo(this, activeScenePill, activeModePill)">
+                            <a>Sample 1</a>
+                        </li>
+                        <li class="method-pill" data-value="force_1" onclick="selectGalleryVideo(this, activeScenePill, activeModePill)">
+                            <a>Sample 2</a>
+                        </li>
+                        <li class="method-pill" data-value="force_1" onclick="selectGalleryVideo(this, activeScenePill, activeModePill)">
+                            <a>Sample 3</a>
+                        </li>
+                        <li class="method-pill" data-value="force_1" onclick="selectGalleryVideo(this, activeScenePill, activeModePill)">
+                            <a>Sample 4</a>
+                        </li>
+                        <li class="method-pill" data-value="force_1" onclick="selectGalleryVideo(this, activeScenePill, activeModePill)">
+                            <a>Sample 5</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <script>
+                    activeMethodPill = document.querySelector('.method-pill.active');
+                    activeScenePill = document.querySelector('.scene-pill.active');
+                    activeModePill = document.querySelector('.mode-pill.active');
+                </script>
+
+            </div>
+        </div>
+
+        <br><br>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3>Citation</h3>
+                <div class="form-group">
+                    <textarea id="bibtex" class="form-control" readonly aria-label="BibTeX Citation for Copying"
+                        onclick="this.select();" onfocus="this.select();" style="height: 160px;">
+@article{vasile2025collidinggs,
+    title={CollidingGS: Gaussian-Augmented Physics Simulation and Identification with Complex Colliders},
+    author={Federico Vasile and Ri-Zhao Qiu and Lorenzo Natale and Xiaolong Wang},
+    journal={arXiv preprint},
+    year={2025},
+    }</textarea>
+                </div>
+            </div>
+        </div>
+
+        <!--
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+            <h3>
+                Acknowledgements
+            </h3>
+            <p class="text-justify">
+                Acknowledgements here.
+                <br><br>
+                The website template was borrowed from <a href="https://reconfusion.github.io/">ReconFusion</a>, <a
+                href="https://dorverbin.github.io/refnerf">Ref-NeRF</a> and <a
+                href="https://tianweiy.github.io/dmd/">DMD</a>.
+            </p>
+            </div>
+        </div>
+        -->
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+            <p class="text-justify">
+                The website template was borrowed from <a href="https://physdreamer.github.io/">PhysDreamer</a>, <a href="https://reconfusion.github.io/">ReconFusion</a>, <a
+                href="https://dorverbin.github.io/refnerf">Ref-NeRF</a> and <a
+                href="https://tianweiy.github.io/dmd/">DMD</a>.
+            </p>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
