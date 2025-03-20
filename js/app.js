@@ -9,7 +9,7 @@ var activeCompScenePill = null;
 var activeCompVidID = 0;
 
 
-function selectGalleryVideo(methodPill, scenePill, modePill) {
+function selectGalleryVideo(methodPill, scenePill, modePill, metricsPill) {
     // Your existing logic for video selection
     select = true;
 
@@ -19,24 +19,37 @@ function selectGalleryVideo(methodPill, scenePill, modePill) {
     if (activeScenePill) {
         activeScenePill.classList.remove("active");
     }
-    if (modePill) {
+    if (activeModePill) {
         activeModePill.classList.remove("active");
+    }
+    if (activeMetricsPill) {
+        activeMetricsPill.classList.remove("active");
+    }
+
+    if (modePill) {
         modePill.classList.add("active");
         activeModePill = modePill;
     }
+    if (metricsPill) {
+        metricsPill.classList.add("active");
+        activeMetricsPill = metricsPill;
+    }
+
     activeMethodPill = methodPill;
     activeScenePill = scenePill;
     methodPill.classList.add("active");
     scenePill.classList.add("active");
+
     method = methodPill.getAttribute("data-value");
     scene = scenePill.getAttribute("data-value");
-    mode = activeModePill.getAttribute("data-value");
+    mode = activeModePill ? activeModePill.getAttribute("data-value") : "";
+    metrics = activeMetricsPill ? activeMetricsPill.getAttribute("data-value") : "";
 
     // swap video to avoid flickering
     activeVidID = 1 - activeVidID;
     var video_active = document.getElementById("compVideo" + activeVidID);
     var video_hidden = document.getElementById("compVideo" + (1 - activeVidID));
-    video_active.src = "assets/videos/" + scene + "/" +  mode + "_" + method + ".mp4";
+    video_active.src = "assets/videos/" + metrics + "/" + scene + "_" + method + "_" + mode + ".mp4";
     video_active.load();
 }
 

@@ -253,7 +253,6 @@ input:checked + .slider:after
 .video-container {
   position: relative;
   max-width: 100%;
-  margin: 0.5em;
 }
 
 .overlay {

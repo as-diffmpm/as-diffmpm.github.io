@@ -123,7 +123,7 @@
                         <span class="icon">
                             <i class="fab fa-github"></i>
                         </span>
-                        <span>Code</span>
+                        <span>Code (coming soon)</span>
                     </a>
                 </span>
 
@@ -157,9 +157,9 @@
                     System identification involving the geometry, appearance, and physical properties from video
                     observations is a challenging task with applications in robotics and graphics. Recent approaches
                     have relied on fully differentiable Material-Point-Method (MPM) and rendering for simultaneous
-                    optimizations of these properties. However, they are limited to simplified object-environment
+                    optimizations of these properties. However, <b>they are limited to simplified object-environment
                     interactions with simple planar colliders and fail in more realistic scenarios where objects collide
-                    with non-planar surfaces. Available MPM-based simulators that support such complex interactions lack
+                    with non-planar surfaces</b>. Available MPM-based simulators that support such complex interactions lack
                     differentiability for gradient-based optimizations. We propose AS-DiffMPM, a differentiable MPM
                     framework that enables physical property estimation with arbitrarily shaped colliders. Our approach
                     extends existing methods by incorporating a differentiable collision handling mechanism, allowing
@@ -183,13 +183,9 @@
                 <image src="assets/figures/figure_teaser.png" width=100% style="display: block; margin: auto;"></image>
                 <br>
                 <p class="text-justify">
-                    Given multi-view input images, we first segment the continuum object and rigid body collider. The
-                    geometry of the continuum object is reconstructed using a rendering model (e.g., <a href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/"> Gaussian
-                    Splatting</a>), while the rigid body collider is separately reconstructed with <a href="https://surfsplatting.github.io/">2DGS</a>. Collision
-                    properties from the rigid body are projected onto the Collision Grid, then transferred to the
-                    continuum material particles. Particle trajectories are subsequently advected and collisions are
-                    handled during the P2G and G2P stages. Finally, the updated particle positions are mapped back to
-                    rendering primitives for photorealistic and physically plausible animation.
+                    Given multi-view input images, we segment out the continuum object and rigid body collider for reconstruction. 
+                    Then, we extract particles and advect them using our AnyShape Differentiable Material Point Method (AS-DiffMPM). 
+                    The particle trajectories are mapped back to rendering primitives for photorealistic and physically plausible animation.
                 </p>
             </div>
         </div>
@@ -203,25 +199,21 @@
                 </h3><br>
                 <p class="text-justify">
                     System identification involves estimating the physical parameters of objects from visual observations.
-                    Unlike previous methods, we address this challenge during collisions with complex colliders rather than planar surfaces.
-                    Our AS-DiffMPM can be seamlessly integrated with various rendering methods for the task at hand.
-                                                                                
-                    <br>Below, we present a visual comparison between the ground truth observations and the estimated physical parameters (upon convergence)
-                    using our AS-DiffMPM in combination with various rendering methods: <a href="https://surfsplatting.github.io/">2DGS</a>,
+                    Our AS-DiffMPM can be seamlessly integrated with various rendering methods (e.g., <a href="https://surfsplatting.github.io/">2DGS</a>,
                     <a href="https://sunset1995.github.io/dvgo/">DVGO</a>,      
-                    <a href="https://jukgei.github.io/project/gic/">MDyn-3DGS</a>.
+                    <a href="https://jukgei.github.io/project/gic/">MDyn-3DGS</a>.) for the task at hand.
+                                                                                
+                    <br>Below, we present a visual comparison between the ground truth observations and the renderings upon convergence of the physical parameters estimation. 
                 </p> 
 
                 <div class="text-center">
                     <div class="video-container">
-                        <video class="video" style="height: 512px; max-width: 100%;" m id="compVideo0" loop playsinline
-                            autoplay muted>
-                            <source src="assets/videos/red_rose/view4_force_0.mp4" />
+                        <video class="video" style="height: 100%; width: 100%;" id="compVideo0" loop playsinline autoplay muted>
+                            <source src="assets/videos/nometrics/newtonian_0_box.mp4" />
                         </video>
                         </video>
-                        <video class="video" style="height: 512px; max-width: 100%;" id="compVideo1" loop playsinline
-                            autoplay muted hidden>
-                            <source src="assets/videos/red_rose/view4_force_1.mp4" />
+                        <video class="video" style="height: 100%; width: 100%;" id="compVideo1" loop playsinline autoplay muted hidden>
+                            <source src="assets/videos/nometrics/newtonian_0_box.mp4" />
                         </video>
                     </div>
 
@@ -250,16 +242,16 @@
 
                 <div class="text-center">
                     <ul class="nav nav-pills center-pills">
-                        <li class="scene-pill active" data-value="red_rose"
-                            onclick="selectGalleryVideo(activeMethodPill, this, activeModePill)">
+                        <li class="scene-pill active" data-value="newtonian"
+                            onclick="selectGalleryVideo(activeMethodPill, this, activeModePill, activeMetricsPill)">
                             <a>Newtonian</a>
                         </li>
-                        <li class="scene-pill" data-value="telephone"
-                            onclick="selectGalleryVideo(activeMethodPill, this, activeModePill)">
+                        <li class="scene-pill" data-value="non_newtonian"
+                            onclick="selectGalleryVideo(activeMethodPill, this, activeModePill, activeMetricsPill)">
                             <a>Non-Newtonian</a>
                         </li>
-                        <li class="scene-pill" data-value="hat"
-                            onclick="selectGalleryVideo(activeMethodPill, this, activeModePill)">
+                        <li class="scene-pill" data-value="sand"
+                            onclick="selectGalleryVideo(activeMethodPill, this, activeModePill, activeMetricsPill)">
                             <a>Granular</a>
                         </li>
                     </ul>
@@ -270,13 +262,13 @@
                 <div class="text-center ">
                     <!-- <em>Select viewpoint.</em> -->
                     <ul class="nav nav-pills center-pills">
-                        <li class="mode-pill active" data-value="view4" onclick="selectGalleryVideo(activeMethodPill, activeScenePill, this)">
+                        <li class="mode-pill active" data-value="box" onclick="selectGalleryVideo(activeMethodPill, activeScenePill, this, activeMetricsPill)">
                             <a>Box</a>
                         </li>
-                        <li class="mode-pill" data-value="viewm" onclick="selectGalleryVideo(activeMethodPill, activeScenePill, this)">
+                        <li class="mode-pill" data-value="bunny" onclick="selectGalleryVideo(activeMethodPill, activeScenePill, this, activeMetricsPill)">
                             <a>Bunny</a>
                         </li>
-                        <li class="mode-pill" data-value="viewm" onclick="selectGalleryVideo(activeMethodPill, activeScenePill, this)">
+                        <li class="mode-pill" data-value="armadillo" onclick="selectGalleryVideo(activeMethodPill, activeScenePill, this, activeMetricsPill)">
                             <a>Armadillo</a>
                         </li>
                     </ul>
@@ -287,20 +279,34 @@
                 <div class="text-center ">
                     <!-- <em>Select interaction.</em> -->
                     <ul class="nav nav-pills center-pills">
-                        <li class="method-pill active" data-value="force_0" onclick="selectGalleryVideo(this, activeScenePill, activeModePill)">
+                        <li class="method-pill active" data-value="0" onclick="selectGalleryVideo(this, activeScenePill, activeModePill, activeMetricsPill)">
                             <a>Sample 1</a>
                         </li>
-                        <li class="method-pill" data-value="force_1" onclick="selectGalleryVideo(this, activeScenePill, activeModePill)">
+                        <li class="method-pill" data-value="1" onclick="selectGalleryVideo(this, activeScenePill, activeModePill, activeMetricsPill)">
                             <a>Sample 2</a>
                         </li>
-                        <li class="method-pill" data-value="force_1" onclick="selectGalleryVideo(this, activeScenePill, activeModePill)">
+                        <li class="method-pill" data-value="2" onclick="selectGalleryVideo(this, activeScenePill, activeModePill, activeMetricsPill)">
                             <a>Sample 3</a>
                         </li>
-                        <li class="method-pill" data-value="force_1" onclick="selectGalleryVideo(this, activeScenePill, activeModePill)">
+                        <li class="method-pill" data-value="3" onclick="selectGalleryVideo(this, activeScenePill, activeModePill, activeMetricsPill)">
                             <a>Sample 4</a>
                         </li>
-                        <li class="method-pill" data-value="force_1" onclick="selectGalleryVideo(this, activeScenePill, activeModePill)">
+                        <li class="method-pill" data-value="4" onclick="selectGalleryVideo(this, activeScenePill, activeModePill, activeMetricsPill)">
                             <a>Sample 5</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <br>
+
+                <div class="text-center ">
+                    <!-- <em>Select interaction.</em> -->
+                    <ul class="nav nav-pills center-pills">
+                        <li class="metrics-pill active" data-value="nometrics" onclick="selectGalleryVideo(activeMethodPill, activeScenePill, activeModePill, this)">
+                            <a>Metrics: Off</a>
+                        </li>
+                        <li class="metrics-pill" data-value="metrics" onclick="selectGalleryVideo(activeMethodPill, activeScenePill, activeModePill, this)">
+                            <a>Metrics: On</a>
                         </li>
                     </ul>
                 </div>
@@ -309,6 +315,7 @@
                     activeMethodPill = document.querySelector('.method-pill.active');
                     activeScenePill = document.querySelector('.scene-pill.active');
                     activeModePill = document.querySelector('.mode-pill.active');
+                    activeMetricsPill = document.querySelector('.metrics-pill.active');
                 </script>
 
             </div>
@@ -327,7 +334,7 @@
     author={Federico Vasile and Ri-Zhao Qiu and Lorenzo Natale and Xiaolong Wang},
     journal={arXiv preprint},
     year={2025},
-    }</textarea>
+}</textarea>
                 </div>
             </div>
         </div>
