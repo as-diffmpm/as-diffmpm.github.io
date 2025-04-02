@@ -2,48 +2,35 @@
 var activeMethodPill = null;
 var activeScenePill = null;
 var activeModePill = null;
+var activeMetricsPill = null;
 var activeVidID = 0;
+var activeColVidID = 0;
 var select = false;
-
-var activeCompScenePill = null;
-var activeCompVidID = 0;
+var selectC = false;
 
 
 function selectGalleryVideo(methodPill, scenePill, modePill, metricsPill) {
     // Your existing logic for video selection
     select = true;
 
-    if (activeMethodPill) {
-        activeMethodPill.classList.remove("active");
-    }
-    if (activeScenePill) {
-        activeScenePill.classList.remove("active");
-    }
-    if (activeModePill) {
-        activeModePill.classList.remove("active");
-    }
-    if (activeMetricsPill) {
-        activeMetricsPill.classList.remove("active");
-    }
-
-    if (modePill) {
-        modePill.classList.add("active");
-        activeModePill = modePill;
-    }
-    if (metricsPill) {
-        metricsPill.classList.add("active");
-        activeMetricsPill = metricsPill;
-    }
+    activeMethodPill.classList.remove("active");
+    activeScenePill.classList.remove("active");
+    activeModePill.classList.remove("active");
+    activeMetricsPill.classList.remove("active");
 
     activeMethodPill = methodPill;
     activeScenePill = scenePill;
-    methodPill.classList.add("active");
-    scenePill.classList.add("active");
+    activeModePill = modePill;
+    activeMetricsPill = metricsPill;
+    activeMethodPill.classList.add("active");
+    activeScenePill.classList.add("active");
+    activeModePill.classList.add("active");
+    activeMetricsPill.classList.add("active");
 
-    method = methodPill.getAttribute("data-value");
-    scene = scenePill.getAttribute("data-value");
-    mode = activeModePill ? activeModePill.getAttribute("data-value") : "";
-    metrics = activeMetricsPill ? activeMetricsPill.getAttribute("data-value") : "";
+    method = activeMethodPill.getAttribute("data-value");
+    scene = activeScenePill.getAttribute("data-value");
+    mode = activeModePill.getAttribute("data-value");
+    metrics = activeMetricsPill.getAttribute("data-value");
 
     // swap video to avoid flickering
     activeVidID = 1 - activeVidID;
@@ -53,29 +40,18 @@ function selectGalleryVideo(methodPill, scenePill, modePill, metricsPill) {
     video_active.load();
 }
 
+function selectGalleryVideoCollision(colliderPill) {
+    selectC = true;
 
-function selectCompVideo(scenePill, samplePill) {
-    // Your existing logic for video selection
+    activeCollisionPill.classList.remove("active");
 
-    if (activeCompScenePill) {
-        activeCompScenePill.classList.remove("active");
-    }
-    if (activeCompSamplePill) {
-        activeCompSamplePill.classList.remove("active");
-    }
-    activeCompScenePill = scenePill;
-    activeCompSamplePill = samplePill;
-    scenePill.classList.add("active");
-    samplePill.classList.add("active");
-    scene = scenePill.getAttribute("data-value");
-    sample = samplePill.getAttribute("data-value");
-    // console.log(scene);
+    activeCollisionPill = colliderPill;
+    activeCollisionPill.classList.add("active");
 
     // swap video to avoid flickering
-    activeCompVidID = 1 - activeCompVidID;
-    var video_active = document.getElementById("compGridVideo" + activeCompVidID);
-    var video_hidden = document.getElementById("compGridVideo" + (1 - activeCompVidID));
-    video_active.src = "assets/videos/supp_compare/" + scene + "/compare_" + sample  + ".mp4";
-    console.log(video_active.src);
+    activeColVidID = 1 - activeColVidID;
+    var video_active = document.getElementById("compVideoC" + activeColVidID);
+    var video_hidden = document.getElementById("compVideoC" + (1 - activeColVidID));
+    video_active.src = "assets/videos/collisions/" + colliderPill.getAttribute("data-value") + ".mp4";
     video_active.load();
 }

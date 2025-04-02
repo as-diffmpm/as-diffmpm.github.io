@@ -7,7 +7,7 @@
 
     <title>CollidingGS</title>
 
-    <meta name="description" content="PhysDreamer">
+    <meta name="description" content="CollidingGS">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <meta property="og:image" content="">
@@ -94,7 +94,6 @@
                         </a><sup>3</sup>
                     </li>
                     <wbr>
-                    <!-- </br>Google -->
                 </ul>
             </div>
             <div class="col-md-3">
@@ -189,19 +188,85 @@
                 </p>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3>
+                    Collision Resolution
+                </h3><br>
+                <p class="text-justify">
+                    We compare our AnyShape Differentiable Material Point Method (<b>AS-DiffMPM</b>) with the GOP-DiffMPM baseline. 
+                    AS-DiffMPM models collisions with sharp, fine-grained colliders more accurately. Particle trajectories are shown below.
+                </p>
+
+                <div class="text-center">
+                    <div class="video-container">
+                        <video class="video" style="height: 100%; width: 100%;" id="compVideoC0" loop playsinline autoplay muted>
+                            <source src="assets/videos/collisions/box.mp4" />
+                        </video>
+                        </video>
+                        <video class="video" style="height: 100%; width: 100%;" id="compVideoC1" loop playsinline autoplay muted hidden>
+                            <source src="assets/videos/collisions/armadillo.mp4" />
+                        </video>
+                    </div>
+
+                    <script> // prevent flickering when switching videos
+                        videoC0 = document.getElementById("compVideoC0");
+                        videoC1 = document.getElementById("compVideoC1");
+                        videoC0.addEventListener('loadedmetadata', function () {
+                            if (activeColVidID == 0 && selectC) {
+                                videoC0.play();
+                                videoC0.hidden = false;
+                                videoC1.hidden = true;
+                            }
+                        });
+                        videoC1.addEventListener('loadedmetadata', function () {
+                            if (activeColVidID == 1 && selectC) {
+                                videoC1.play();
+                                videoC0.hidden = true;
+                                videoC1.hidden = false;
+                            }
+                        });
+                    </script>
+
+                </div>
+
+                <em>Select different colliders.</em>
+                <br><br>
+
+                <div class="text-center">
+                    <ul class="nav nav-pills center-pills">
+                        <li class="collision-pill active" data-value="box" onclick="selectGalleryVideoCollision(this)">
+                            <a>Box</a>
+                        </li>
+                        <li class="collision-pill" data-value="bunny" onclick="selectGalleryVideoCollision(this)">    
+                            <a>Bunny</a>
+                        </li>
+                        <li class="collision-pill" data-value="armadillo" onclick="selectGalleryVideoCollision(this)">    
+                            <a>Armadillo</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <script>
+                    activeCollisionPill = document.querySelector('.collision-pill.active');
+                </script>
+
+            </div>
+        </div>
         
         <br><br>
 
-        <div class="row"></div>
+        <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <h3>
-                    System Identification Results
+                    System Identification
                 </h3><br>
                 <p class="text-justify">
                     System identification involves estimating the physical parameters of objects from visual observations.
                     Our AS-DiffMPM can be seamlessly integrated with various rendering methods (e.g., <a href="https://surfsplatting.github.io/">2DGS</a>,
                     <a href="https://sunset1995.github.io/dvgo/">DVGO</a>,      
-                    <a href="https://jukgei.github.io/project/gic/">MDyn-3DGS</a>.) for the task at hand.
+                    <a href="https://jukgei.github.io/project/gic/">MDyn-3DGS</a>) for the task at hand.
                                                                                 
                     <br>Below, we present a visual comparison between the ground truth observations and the renderings upon convergence of the physical parameters estimation. 
                 </p> 
@@ -260,7 +325,6 @@
                 <br>
 
                 <div class="text-center ">
-                    <!-- <em>Select viewpoint.</em> -->
                     <ul class="nav nav-pills center-pills">
                         <li class="mode-pill active" data-value="box" onclick="selectGalleryVideo(activeMethodPill, activeScenePill, this, activeMetricsPill)">
                             <a>Box</a>
@@ -277,7 +341,6 @@
                 <br>
 
                 <div class="text-center ">
-                    <!-- <em>Select interaction.</em> -->
                     <ul class="nav nav-pills center-pills">
                         <li class="method-pill active" data-value="0" onclick="selectGalleryVideo(this, activeScenePill, activeModePill, activeMetricsPill)">
                             <a>Sample 1</a>
@@ -300,7 +363,6 @@
                 <br>
 
                 <div class="text-center ">
-                    <!-- <em>Select interaction.</em> -->
                     <ul class="nav nav-pills center-pills">
                         <li class="metrics-pill active" data-value="nometrics" onclick="selectGalleryVideo(activeMethodPill, activeScenePill, activeModePill, this)">
                             <a>Metrics: Off</a>
@@ -328,7 +390,7 @@
                 <h3>Citation</h3>
                 <div class="form-group">
                     <textarea id="bibtex" class="form-control" readonly aria-label="BibTeX Citation for Copying"
-                        onclick="this.select();" onfocus="this.select();" style="height: 160px;">
+                        onclick="this.select();" onfocus="this.select();" style="height: 140px;">
 @article{vasile2025collidinggs,
     title={CollidingGS: Gaussian-Augmented Physics Simulation and Identification with Complex Colliders},
     author={Federico Vasile and Ri-Zhao Qiu and Lorenzo Natale and Xiaolong Wang},
