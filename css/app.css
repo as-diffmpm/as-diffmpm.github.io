@@ -81,7 +81,7 @@ tr,
 p,
 a {
   font-family: 'Lato', Verdana, Helvetica, sans-serif;
-  font-size: 14px
+  font-size: 15px
 }
 
 strong {
@@ -315,6 +315,7 @@ input:checked + .slider:after
     text-decoration: none;
     user-select: none;
     -webkit-appearance: none;
+    appearance: none;
     align-items: center;
     border: 1px solid transparent;
     box-shadow: none;
@@ -363,4 +364,24 @@ input:checked + .slider:after
     width: 1.5em;
     margin-left: calc(-.5em - 1px);
     margin-right: .25em;
+}
+
+/* Construction banner */
+#construction-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #c62828; /* red */
+  color: #fff;
+  text-align: center;
+  font-weight: 700;
+  padding: 10px 0;
+  z-index: 9999;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+/* When banner is present, add top padding to body content so it isn't covered */
+body.has-banner {
+  padding-top: 56px; /* banner height + some spacing */
 }
